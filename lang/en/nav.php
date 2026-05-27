@@ -1,0 +1,22 @@
+<?php
+return [
+    'home'         => 'Home',
+    'about'        => 'About',
+    'blog'         => 'News',
+    'gallery'      => 'Gallery',
+    'contact'      => 'Contact',
+    'teachers'     => 'Teachers',
+    'programs'     => 'Programs',
+    'navigation'   => 'Navigation',
+    'all_news'     => 'All news',
+    'all_teachers' => 'All teachers',
+    'read_more'    => 'Read',
+    'enroll'       => 'Enroll now',
+    'call_us'      => 'Call us',
+    'write_us'     => 'Write to us',
+    'more_details' => 'Learn more',
+    'back'         => 'Back',
+    'our_team'     => 'Team',
+    'our_news'     => 'Latest',
+    'tagline'      => 'A place where children grow up happy',
+];

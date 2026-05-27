@@ -1,0 +1,46 @@
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Nunito', ui-sans-serif, system-ui, sans-serif;
+    --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+    --color-didi-green:  #7EC8A4;
+    --color-didi-orange: #F4A261;
+    --color-didi-blue:   #A8DADC;
+    --color-didi-bg:     #FAFAF8;
+    --color-didi-text:   #2D3748;
+}
+
+/* Smooth scroll */
+html { scroll-behavior: smooth; }
+
+/* Fade-in animation */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up { animation: fadeInUp 0.6s ease both; }
+
+/* Glassmorphism card */
+.glass {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Gradient background */
+.hero-gradient {
+    background: linear-gradient(135deg, #d4f0e4 0%, #a8dadc 50%, #fcd9b6 100%);
+}
+
+/* Section separator */
+.wave-bottom {
+    clip-path: ellipse(100% 60% at 50% 40%);
+}
