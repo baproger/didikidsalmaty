@@ -30,8 +30,8 @@ jobs:
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USER }}
+          server: 185.98.5.104
+          username: didi
           password: ${{ secrets.FTP_PASS }}
           local-dir: ./
           server-dir: /
