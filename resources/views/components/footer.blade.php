@@ -13,7 +13,7 @@
                 <a href="{{ route('home') }}" class="flex items-center mb-4 group">
                     @if(file_exists(public_path('images/didilogotype.png')))
                         <img src="/images/didilogotype.png" alt="DiDi Kindergarten"
-                             class="h-12 w-auto object-contain group-hover:scale-105 transition-transform duration-200">
+                             class="h-14 w-auto object-contain group-hover:scale-105 transition-transform duration-200">
                     @else
                         <div style="width:36px;height:36px;border-radius:14px;background:#7EC8A4;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#fff;flex-shrink:0">D</div>
                         <span style="margin-left:10px;font-weight:800;font-size:18px;color:#fff">Didi Kindergarten</span>

@@ -33,7 +33,7 @@
             <a href="{{ route('home') }}" class="flex items-center gap-3 shrink-0 group">
                 @if(file_exists(public_path('images/didilogotype.png')))
                     <img src="/images/didilogotype.png" alt="DiDi"
-                         class="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
+                         class="h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
                 @else
                     <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#7EC8A4] to-[#5db888]
                                 flex items-center justify-center shadow-lg shadow-[#7EC8A4]/30
