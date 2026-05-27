@@ -5,9 +5,6 @@ on:
     branches:
       - main
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -19,7 +16,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '24'
+          node-version: '20'
 
       - name: Install npm dependencies
         run: npm ci
@@ -27,21 +24,23 @@ jobs:
       - name: Build assets
         run: npm run build
 
+      - name: Install lftp
+        run: sudo apt-get install -y lftp
+
       - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: 185.98.5.104
-          username: didi
-          password: ${{ secrets.FTP_PASS }}
-          security: loose
-          local-dir: ./
-          server-dir: /
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/.env
-            **/storage/logs/**
-            **/storage/framework/cache/**
-            **/storage/framework/sessions/**
-            **/storage/framework/views/**
+        run: |
+          lftp -u didi,${{ secrets.FTP_PASS }} ftp://185.98.5.104 <<EOF
+          set ssl:verify-certificate false
+          set ftp:ssl-allow true
+          mirror -R --verbose --delete \
+            --exclude .git \
+            --exclude .github \
+            --exclude node_modules \
+            --exclude .env \
+            --exclude storage/logs \
+            --exclude storage/framework/cache \
+            --exclude storage/framework/sessions \
+            --exclude storage/framework/views \
+            . /
+          bye
+          EOF
