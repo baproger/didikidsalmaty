@@ -33,6 +33,7 @@ jobs:
           server: 185.98.5.104
           username: didi
           password: ${{ secrets.FTP_PASS }}
+          security: loose
           local-dir: ./
           server-dir: /
           exclude: |
