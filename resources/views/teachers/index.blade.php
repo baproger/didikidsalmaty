@@ -135,7 +135,7 @@
 
 {{-- ─── CTA ────────────────────────────────────────────────────────── --}}
 <section style="background:#ffffff; padding:64px 0 80px">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="reveal" x-intersect.once="$el.classList.add('in')">
 
             <div style="background:linear-gradient(135deg, #7EC8A4 0%, #4ab882 100%); border-radius:28px; overflow:hidden; position:relative">
