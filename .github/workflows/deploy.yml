@@ -24,23 +24,21 @@ jobs:
       - name: Build assets
         run: npm run build
 
-      - name: Install lftp
-        run: sudo apt-get install -y lftp
-
       - name: Deploy via FTP
-        run: |
-          lftp -u didi,${{ secrets.FTP_PASS }} ftp://185.98.5.104 <<EOF
-          set ssl:verify-certificate false
-          set ftp:ssl-allow true
-          mirror -R --verbose --delete \
-            --exclude .git \
-            --exclude .github \
-            --exclude node_modules \
-            --exclude .env \
-            --exclude storage/logs \
-            --exclude storage/framework/cache \
-            --exclude storage/framework/sessions \
-            --exclude storage/framework/views \
-            . /
-          bye
-          EOF
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: 185.98.5.104
+          username: didi
+          password: ${{ secrets.FTP_PASS }}
+          security: loose
+          local-dir: ./
+          server-dir: /
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.env
+            **/storage/logs/**
+            **/storage/framework/cache/**
+            **/storage/framework/sessions/**
+            **/storage/framework/views/**
