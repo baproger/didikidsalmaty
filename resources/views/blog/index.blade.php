@@ -49,7 +49,7 @@
                     </h2>
                     <p class="text-gray-400 text-sm line-clamp-2 mb-4">{{ $post->excerpt }}</p>
                     <div class="flex items-center justify-between text-xs text-gray-400">
-                        <time>{{ $post->published_at?->format('d M Y') }}</time>
+                        <time>{{ $post->published_at?->locale(app()->getLocale())->isoFormat('D MMMM YYYY') }}</time>
                         <a href="{{ route('blog.show', $post->slug) }}" class="font-semibold text-[#7EC8A4] hover:underline">Читать →</a>
                     </div>
                 </div>
