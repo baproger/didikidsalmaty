@@ -45,3 +45,7 @@ jobs:
             **/storage/framework/cache/**
             **/storage/framework/sessions/**
             **/storage/framework/views/**
+            **/public/js/filament/**
+            **/public/css/filament/**
+            **/public/fonts/filament/**
+            **/vendor/**
