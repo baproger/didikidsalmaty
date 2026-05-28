@@ -16,11 +16,8 @@
         </h1>
 
         <div class="flex items-center gap-4 text-sm text-gray-400 mb-8">
-            @if($post->author)
-            <span>{{ $post->author->name }}</span>
-            @endif
             @if($post->published_at)
-            <time>{{ $post->published_at->locale(app()->getLocale())->isoFormat('D MMMM YYYY') }}</time>
+            <time>{{ $post->published_at->format('d.m.Y') }}</time>
             @endif
         </div>
 
@@ -41,7 +38,7 @@
                 <a href="{{ route('blog.show', $rel->slug) }}"
                    class="bg-[#7EC8A4]/10 rounded-2xl p-4 hover:bg-[#7EC8A4]/20 transition-colors">
                     <h4 class="font-semibold text-sm text-[#2D3748] leading-snug">{{ $rel->title }}</h4>
-                    <time class="text-xs text-gray-400 mt-1 block">{{ $rel->published_at?->locale(app()->getLocale())->isoFormat('D MMMM YYYY') }}</time>
+                    <time class="text-xs text-gray-400 mt-1 block">{{ $rel->published_at?->format('d.m.Y') }}</time>
                 </a>
                 @endforeach
             </div>
