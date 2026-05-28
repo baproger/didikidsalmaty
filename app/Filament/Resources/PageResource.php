@@ -75,6 +75,14 @@ class PageResource extends Resource
                         Block::make('text')
                             ->label('📝 Текстовый блок')
                             ->schema([
+                                Forms\Components\Select::make('layout')
+                                    ->label('Макет')
+                                    ->options([
+                                        '1col' => '1 колонка',
+                                        '2col' => '2 колонки',
+                                    ])
+                                    ->default('1col')
+                                    ->columnSpanFull(),
                                 Forms\Components\Select::make('align')
                                     ->label('Выравнивание текста')
                                     ->options(['left' => 'По левому краю', 'center' => 'По центру'])
