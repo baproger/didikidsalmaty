@@ -79,7 +79,15 @@ class PostResource extends Resource
     protected static function translationFields(string $locale): array
     {
         return [
-            Forms\Components\TextInput::make("title.{$locale}")->label('Заголовок')->required($locale === 'ru'),
+            Forms\Components\TextInput::make("title.{$locale}")
+                ->label('Заголовок')
+                ->required($locale === 'ru')
+                ->live(onBlur: true)
+                ->afterStateUpdated(function ($state, \Filament\Schemas\Components\Utilities\Set $set, \Filament\Schemas\Components\Utilities\Get $get) use ($locale) {
+                    if ($locale === 'ru' && blank($get('slug'))) {
+                        $set('slug', Str::slug($state));
+                    }
+                }),
             Forms\Components\RichEditor::make("content.{$locale}")->label('Контент')->columnSpanFull(),
             Forms\Components\Textarea::make("excerpt.{$locale}")->label('Краткое описание')->rows(3),
             Forms\Components\TextInput::make("meta_title.{$locale}")->label('Meta Title'),
