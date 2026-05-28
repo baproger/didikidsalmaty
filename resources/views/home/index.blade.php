@@ -538,7 +538,7 @@
                                             class="text-[11px] font-bold text-[#5aaf88] bg-[#7EC8A4]/10 px-2.5 py-0.5 rounded-full uppercase tracking-wide">{{ $catName }}</span>
                                     @endif
                                     <time
-                                        class="text-xs text-gray-400 ml-auto">{{ $post->published_at?->format('d M Y') }}</time>
+                                        class="text-xs text-gray-400 ml-auto">{{ $post->published_at?->format('d.m.Y') }}</time>
                                 </div>
                                 <h3
                                     class="font-bold text-[#1a2535] leading-snug line-clamp-2 mb-2 group-hover:text-[#5aaf88] transition-colors text-[15px]">
