@@ -50,7 +50,7 @@
                     <p class="text-gray-400 text-sm line-clamp-2 mb-4">{{ $post->excerpt }}</p>
                     <div class="flex items-center justify-between text-xs text-gray-400">
                         <time>{{ $post->published_at?->format('d.m.Y') }}</time>
-                        <a href="{{ route('blog.show', $post->slug) }}" class="font-semibold text-[#7EC8A4] hover:underline">Читать →</a>
+                        <a href="{{ route('blog.show', $post->slug) }}" class="font-semibold text-[#7EC8A4] hover:underline">{{ __('nav.read_more') }} →</a>
                     </div>
                 </div>
             </article>

@@ -32,7 +32,7 @@
 
         @if($related->count())
         <div class="mt-16 pt-10 border-t border-gray-100">
-            <h3 class="font-bold text-xl font-sans text-[#2D3748] mb-6">Другие новости</h3>
+            <h3 class="font-bold text-xl font-sans text-[#2D3748] mb-6">{{ __('nav.other_news') }}</h3>
             <div class="grid md:grid-cols-3 gap-4">
                 @foreach($related as $rel)
                 <a href="{{ route('blog.show', $rel->slug) }}"

@@ -19,4 +19,6 @@ return [
     'our_team'     => 'Team',
     'our_news'     => 'Latest',
     'tagline'      => 'A place where children grow up happy',
+    'other_news'   => 'Other news',
+    'results'      => 'results',
 ];
