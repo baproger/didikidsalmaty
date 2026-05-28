@@ -661,7 +661,7 @@
                         <div style="flex:1; min-width:240px">
                             <span
                                 style="display:inline-block;background:rgba(255,255,255,.25);color:#fff;font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:5px 12px;border-radius:20px;margin-bottom:20px">
-                                DiDi Kindergarten
+                                DiDi
                             </span>
                             <h2
                                 style="font-size:clamp(22px,3vw,34px);font-weight:800;color:#fff;line-height:1.2;letter-spacing:-.02em;margin:0 0 12px">
