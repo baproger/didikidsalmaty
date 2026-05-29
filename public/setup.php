@@ -4,24 +4,42 @@ if (!isset($_GET['run'])) {
     die('Добавь ?run=1 к URL');
 }
 
-chdir(dirname(__DIR__));
+$publicPath  = __DIR__;
+$storagePath = dirname(__DIR__) . '/storage/app/public';
+$linkPath    = $publicPath . '/storage';
 
-// Показать APP_URL из .env
-$env = file_get_contents('.env');
-preg_match('/APP_URL=(.+)/', $env, $m);
-echo "<b>APP_URL в .env:</b> " . ($m[1] ?? 'не найден') . "<hr>";
+echo "<h3>Диагностика</h3>";
+echo "<b>public/ :</b> {$publicPath}<br>";
+echo "<b>storage/ :</b> {$storagePath}<br>";
+echo "<b>Папка storage существует:</b> " . (is_dir($storagePath) ? '✅ да' : '❌ нет') . "<br>";
+echo "<b>Симлинк public/storage:</b> ";
 
-// Показать storage symlink
-$link = public_path('storage');
-echo "<b>Storage symlink:</b> " . (is_link($link) ? '✅ есть → ' . readlink($link) : '❌ нет') . "<hr>";
+if (is_link($linkPath)) {
+    echo '✅ есть → ' . readlink($linkPath) . "<br>";
+    echo "<b>Симлинк работает:</b> " . (is_dir($linkPath) ? '✅ да' : '❌ НЕТ (битый!)') . "<br>";
+} else {
+    echo '❌ отсутствует<br>';
+}
 
-// Запустить команды
-$commands = [
-    'storage:link' => 'php artisan storage:link 2>&1',
-    'config:clear' => 'php artisan config:clear 2>&1',
-    'cache:clear'  => 'php artisan cache:clear 2>&1',
-];
+echo "<hr><h3>Исправление симлинка</h3>";
 
-foreach ($commands as $name => $cmd) {
-    echo "<b>{$name}:</b><pre>" . shell_exec($cmd) . "</pre><hr>";
+if (isset($_GET['fix'])) {
+    // Удаляем старый симлинк если битый
+    if (is_link($linkPath) && !is_dir($linkPath)) {
+        unlink($linkPath);
+        echo "✅ Старый битый симлинк удалён<br>";
+    }
+
+    // Создаём новый
+    if (!file_exists($linkPath)) {
+        if (symlink($storagePath, $linkPath)) {
+            echo "✅ Новый симлинк создан: {$linkPath} → {$storagePath}<br>";
+        } else {
+            echo "❌ Не удалось создать симлинк<br>";
+        }
+    } else {
+        echo "ℹ️ Симлинк уже существует и работает<br>";
+    }
+} else {
+    echo '<a href="?run=1&fix=1"><b>👉 Нажми сюда чтобы исправить симлинк</b></a>';
 }
