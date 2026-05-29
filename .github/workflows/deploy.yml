@@ -8,6 +8,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Checkout code
@@ -29,38 +30,31 @@ jobs:
       - name: Install lftp
         run: sudo apt-get install -y lftp
 
-      - name: Get changed files
-        id: changed
+      - name: Build lftp script
         run: |
-          git diff --name-only HEAD~1 HEAD > /tmp/changed_files.txt
-          # Always include built assets
-          find public/build -type f >> /tmp/changed_files.txt
-          sort -u /tmp/changed_files.txt > /tmp/files_to_upload.txt
-          echo "Files to upload:"
-          cat /tmp/files_to_upload.txt
+          # Get changed files from last commit + built assets
+          git diff --name-only HEAD~1 HEAD > /tmp/raw_files.txt
+          find public/build -type f >> /tmp/raw_files.txt
+          sort -u /tmp/raw_files.txt > /tmp/all_files.txt
 
-      - name: Deploy changed files via FTP
-        env:
-          FTP_HOST: ${{ secrets.FTP_HOST }}
-          FTP_USER: ${{ secrets.FTP_USER }}
-          FTP_PASS: ${{ secrets.FTP_PASS }}
-        run: |
+          # Build lftp commands (one connection, all puts)
+          echo "set ssl:verify-certificate false" > /tmp/deploy.lftp
+          echo "open -u ${{ secrets.FTP_USER }},${{ secrets.FTP_PASS }} ftp://${{ secrets.FTP_HOST }}" >> /tmp/deploy.lftp
+
           while IFS= read -r file; do
             # Skip excluded paths
-            if echo "$file" | grep -qE "^(\.git|node_modules|\.env|vendor/|storage/logs|storage/framework/cache|storage/framework/sessions|storage/framework/views|public/js/filament|public/css/filament|public/fonts/filament)"; then
+            if echo "$file" | grep -qE "^(\.git|node_modules|\.env|vendor/|storage/logs|storage/framework/(cache|sessions|views)|public/js/filament|public/css/filament|public/fonts/filament)"; then
               continue
             fi
-            # Skip if file doesn't exist locally
-            if [ ! -f "$file" ]; then
-              continue
-            fi
+            if [ ! -f "$file" ]; then continue; fi
             DIR=$(dirname "$file")
-            lftp -c "
-              set ssl:verify-certificate false;
-              open -u $FTP_USER,$FTP_PASS ftp://$FTP_HOST;
-              mkdir -p httpdocs/$DIR;
-              put $file -o httpdocs/$file;
-              bye;
-            "
-            echo "✅ Uploaded: httpdocs/$file"
-          done < /tmp/files_to_upload.txt
+            echo "mkdir -p httpdocs/$DIR" >> /tmp/deploy.lftp
+            echo "put $file -o httpdocs/$file" >> /tmp/deploy.lftp
+          done < /tmp/all_files.txt
+
+          echo "bye" >> /tmp/deploy.lftp
+          echo "=== Files to deploy ==="
+          grep "^put" /tmp/deploy.lftp | sed 's/put //' | awk '{print $1}'
+
+      - name: Deploy via FTP
+        run: lftp -f /tmp/deploy.lftp
