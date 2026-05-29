@@ -24,21 +24,17 @@ if (is_link($linkPath)) {
 echo "<hr><h3>Исправление симлинка</h3>";
 
 if (isset($_GET['fix'])) {
-    // Удаляем старый симлинк если битый
-    if (is_link($linkPath) && !is_dir($linkPath)) {
+    // Удаляем старый симлинк (даже если рабочий — он указывает не туда)
+    if (is_link($linkPath)) {
         unlink($linkPath);
-        echo "✅ Старый битый симлинк удалён<br>";
+        echo "✅ Старый симлинк удалён<br>";
     }
 
-    // Создаём новый
-    if (!file_exists($linkPath)) {
-        if (symlink($storagePath, $linkPath)) {
-            echo "✅ Новый симлинк создан: {$linkPath} → {$storagePath}<br>";
-        } else {
-            echo "❌ Не удалось создать симлинк<br>";
-        }
+    // Создаём новый на правильный путь
+    if (symlink($storagePath, $linkPath)) {
+        echo "✅ Новый симлинк создан:<br>{$linkPath} → {$storagePath}<br>";
     } else {
-        echo "ℹ️ Симлинк уже существует и работает<br>";
+        echo "❌ Не удалось создать симлинк<br>";
     }
 } else {
     echo '<a href="?run=1&fix=1"><b>👉 Нажми сюда чтобы исправить симлинк</b></a>';
