@@ -156,7 +156,7 @@
                 <p class="text-gray-400 max-w-xl mx-auto">{{ __('home.age_groups_subtitle') }}</p>
             </div>
 
-            {{-- Russian groups --}}
+            {{-- Kazakh groups --}}
             @php
                 $groupCard = function ($group, $accentColor) {
                     return $group;
@@ -165,12 +165,12 @@
 
             <div class="mb-10" x-data x-intersect.once="$el.classList.add('animate-fade-in-up')" class="opacity-0">
                 <div class="flex items-center gap-3 mb-6">
-                    <span class="text-lg">🇷🇺</span>
-                    <h3 class="font-bold text-[#2D3748] text-base font-sans">{{ __('home.russian_groups') }}</h3>
+                    <span class="text-lg">🇰🇿</span>
+                    <h3 class="font-bold text-[#2D3748] text-base font-sans">{{ __('home.kazakh_groups') }}</h3>
                     <div class="flex-1 h-px bg-gray-200"></div>
                 </div>
                 <div class="grid grid-cols-3 sm:grid-cols-5 gap-4">
-                    @foreach ($ageGroupsRu as $i => $group)
+                    @foreach ($ageGroupsKk as $i => $group)
                         <div class="flex flex-col items-center gap-3 p-4 bg-white rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-default"
                             style="animation-delay:{{ $i * 0.07 }}s">
                             @if (!empty($group['image']) && file_exists(public_path('images/' . $group['image'])))
@@ -194,15 +194,15 @@
                 </div>
             </div>
 
-            {{-- Kazakh groups --}}
+            {{-- Russian groups --}}
             <div x-data x-intersect.once="$el.classList.add('animate-fade-in-up')" class="opacity-0">
                 <div class="flex items-center gap-3 mb-6">
-                    <span class="text-lg">🇰🇿</span>
-                    <h3 class="font-bold text-[#2D3748] text-base font-sans">{{ __('home.kazakh_groups') }}</h3>
+                    <span class="text-lg">🇷🇺</span>
+                    <h3 class="font-bold text-[#2D3748] text-base font-sans">{{ __('home.russian_groups') }}</h3>
                     <div class="flex-1 h-px bg-gray-200"></div>
                 </div>
                 <div class="grid grid-cols-3 sm:grid-cols-5 gap-4">
-                    @foreach ($ageGroupsKk as $i => $group)
+                    @foreach ($ageGroupsRu as $i => $group)
                         <div class="flex flex-col items-center gap-3 p-4 bg-white rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group cursor-default"
                             style="animation-delay:{{ $i * 0.07 }}s">
                             @if (!empty($group['image']) && file_exists(public_path('images/' . $group['image'])))
