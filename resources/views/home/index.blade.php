@@ -574,60 +574,77 @@
      FAQ
 ══════════════════════════════════════════════════════════ --}}
     @if ($faqs->count())
-        <section style="background:#f8faf9" class="py-20">
+        <section style="background:#ffffff" class="py-20">
             <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
-                <div class="text-center mb-12" x-data x-intersect.once="$el.classList.add('animate-fade-in-up')"
-                    class="opacity-0">
-                    <div class="inline-flex items-center gap-2 text-[#7EC8A4] text-sm font-bold mb-4">
-                        <span class="w-8 h-0.5 bg-[#7EC8A4] rounded"></span>
+                {{-- Header --}}
+                <div class="text-center mb-12" x-data x-intersect.once="$el.classList.add('animate-fade-in-up')" class="opacity-0">
+                    <span class="inline-flex items-center gap-2 bg-[#7EC8A4]/10 text-[#7EC8A4] text-xs font-bold px-4 py-1.5 rounded-full mb-4 uppercase tracking-widest">
                         {{ __('home.faq_label') }}
-                        <span class="w-8 h-0.5 bg-[#7EC8A4] rounded"></span>
-                    </div>
+                    </span>
                     <h2 class="text-3xl lg:text-4xl font-extrabold font-sans text-[#2D3748] mb-3">
-                        {{ __('home.faq_title') }}</h2>
-                    <p class="text-gray-400">{{ __('home.faq_subtitle') }}</p>
+                        {{ __('home.faq_title') }}
+                    </h2>
+                    <p class="text-gray-400 max-w-xl mx-auto">{{ __('home.faq_subtitle') }}</p>
                 </div>
 
+                {{-- Accordion --}}
                 <div x-data="{ open: null }" class="space-y-3">
                     @foreach ($faqs as $i => $faq)
                         @php
-                            $question =
-                                $faq->getTranslation('question', app()->getLocale(), false) ?:
-                                $faq->getTranslation('question', 'ru', false);
-                            $answer =
-                                $faq->getTranslation('answer', app()->getLocale(), false) ?:
-                                $faq->getTranslation('answer', 'ru', false);
+                            $question = $faq->getTranslation('question', app()->getLocale(), false) ?: $faq->getTranslation('question', 'ru', false);
+                            $answer   = $faq->getTranslation('answer',   app()->getLocale(), false) ?: $faq->getTranslation('answer',   'ru', false);
                         @endphp
                         <div x-data x-intersect.once="$el.classList.add('animate-fade-in-up')"
-                            class="opacity-0 bg-[#FAFAF8] rounded-2xl overflow-hidden"
-                            style="animation-delay:{{ $i * 0.05 }}s">
+                             class="opacity-0 rounded-2xl border border-gray-100 overflow-hidden transition-all duration-300"
+                             :class="open === {{ $i }} ? 'shadow-md border-[#7EC8A4]/30' : 'bg-white hover:border-[#7EC8A4]/20 hover:shadow-sm'"
+                             style="animation-delay:{{ $i * 0.05 }}s">
+
                             <button @click="open = open === {{ $i }} ? null : {{ $i }}"
-                                class="w-full flex items-center justify-between px-6 py-5 text-left group">
-                                <span
-                                    class="font-semibold text-[#2D3748] text-sm sm:text-base pr-4 group-hover:text-[#7EC8A4] transition-colors">
+                                    class="w-full flex items-center gap-4 px-6 py-5 text-left transition-colors duration-200"
+                                    :class="open === {{ $i }} ? 'bg-[#7EC8A4]/5' : 'bg-white'">
+
+                                {{-- Number badge --}}
+                                <span class="flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center text-xs font-bold transition-all duration-300"
+                                      :class="open === {{ $i }} ? 'bg-[#7EC8A4] text-white' : 'bg-gray-100 text-gray-400'">
+                                    {{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}
+                                </span>
+
+                                {{-- Question --}}
+                                <span class="flex-1 font-semibold text-sm sm:text-base pr-2 transition-colors duration-200"
+                                      :class="open === {{ $i }} ? 'text-[#7EC8A4]' : 'text-[#2D3748]'">
                                     {{ $question }}
                                 </span>
-                                <svg :class="open === {{ $i }} ? 'rotate-180 text-[#7EC8A4]' : 'text-gray-400'"
-                                    class="w-5 h-5 flex-shrink-0 transition-transform duration-300" fill="none"
-                                    stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 9l-7 7-7-7" />
-                                </svg>
+
+                                {{-- Icon --}}
+                                <span class="flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-300"
+                                      :class="open === {{ $i }} ? 'bg-[#7EC8A4] text-white' : 'bg-gray-100 text-gray-400'">
+                                    <svg class="w-4 h-4 transition-transform duration-300"
+                                         :class="open === {{ $i }} ? 'rotate-180' : ''"
+                                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+                                    </svg>
+                                </span>
                             </button>
+
+                            {{-- Answer --}}
                             <div x-show="open === {{ $i }}"
-                                x-transition:enter="transition ease-out duration-300"
-                                x-transition:enter-start="opacity-0 -translate-y-2"
-                                x-transition:enter-end="opacity-100 translate-y-0"
-                                x-transition:leave="transition ease-in duration-200"
-                                x-transition:leave-start="opacity-100 translate-y-0"
-                                x-transition:leave-end="opacity-0 -translate-y-2"
-                                class="px-6 pb-5 text-gray-500 text-sm leading-relaxed border-t border-gray-100 pt-4">
-                                {{ $answer }}
+                                 x-transition:enter="transition ease-out duration-300"
+                                 x-transition:enter-start="opacity-0 -translate-y-1"
+                                 x-transition:enter-end="opacity-100 translate-y-0"
+                                 x-transition:leave="transition ease-in duration-150"
+                                 x-transition:leave-start="opacity-100 translate-y-0"
+                                 x-transition:leave-end="opacity-0 -translate-y-1"
+                                 class="px-6 pb-6 pt-1 bg-[#7EC8A4]/5"
+                                 style="display:none">
+                                <div class="pl-12 text-gray-500 text-sm leading-relaxed border-l-2 border-[#7EC8A4]/30 ml-0">
+                                    {{ $answer }}
+                                </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
+
             </div>
         </section>
     @endif
