@@ -123,7 +123,7 @@
                 <a href="https://www.instagram.com/baproger.kz/" target="_blank" rel="noopener"
                     style="color:rgba(255,255,255,.4);text-decoration:none;font-weight:600;transition:color .15s"
                     onmouseover="this.style.color='#7EC8A4'"
-                    onmouseout="this.style.color='rgba(255,255,255,.4)'">baproger</a>
+                    onmouseout="this.style.color='rgba(255,255,255,.4)'">baProger</a>
             </span>
         </div>
     </div>
