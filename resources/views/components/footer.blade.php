@@ -105,7 +105,7 @@
         </div>
 
         <div style="border-top:1px solid rgba(255,255,255,.08);margin-top:40px;padding-top:24px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px">
-            <span style="color:rgba(255,255,255,.3);font-size:12px">© {{ date('Y') }} Didi Kindergarten. All rights reserved.</span>
+            <span style="color:rgba(255,255,255,.3);font-size:12px">© {{ date('Y') }} Didi Kindergarten. {{ __('nav.all_rights') }}</span>
             <div class="flex items-center gap-4">
                 @include('components.language-switcher')
             </div>

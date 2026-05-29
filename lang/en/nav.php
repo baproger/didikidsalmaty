@@ -21,4 +21,5 @@ return [
     'tagline'      => 'A place where children grow up happy',
     'other_news'   => 'Other news',
     'results'      => 'results',
+    'all_rights'   => 'All rights reserved.',
 ];
