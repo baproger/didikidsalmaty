@@ -629,16 +629,13 @@
 
                             {{-- Answer --}}
                             <div x-show="open === {{ $i }}"
-                                 x-transition:enter="transition ease-out duration-300"
-                                 x-transition:enter-start="opacity-0 -translate-y-1"
-                                 x-transition:enter-end="opacity-100 translate-y-0"
-                                 x-transition:leave="transition ease-in duration-150"
-                                 x-transition:leave-start="opacity-100 translate-y-0"
-                                 x-transition:leave-end="opacity-0 -translate-y-1"
-                                 class="px-6 pb-6 pt-1 bg-[#7EC8A4]/5"
+                                 x-collapse
+                                 class="bg-[#7EC8A4]/5"
                                  style="display:none">
-                                <div class="pl-12 text-gray-500 text-sm leading-relaxed border-l-2 border-[#7EC8A4]/30 ml-0">
-                                    {{ $answer }}
+                                <div class="px-6 pb-6 pt-1">
+                                    <div class="pl-12 text-gray-500 text-sm leading-relaxed border-l-2 border-[#7EC8A4]/30">
+                                        {{ $answer }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
