@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -27,29 +29,38 @@ jobs:
       - name: Install lftp
         run: sudo apt-get install -y lftp
 
-      - name: Deploy via FTP
+      - name: Get changed files
+        id: changed
+        run: |
+          git diff --name-only HEAD~1 HEAD > /tmp/changed_files.txt
+          # Always include built assets
+          find public/build -type f >> /tmp/changed_files.txt
+          sort -u /tmp/changed_files.txt > /tmp/files_to_upload.txt
+          echo "Files to upload:"
+          cat /tmp/files_to_upload.txt
+
+      - name: Deploy changed files via FTP
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USER }}
           FTP_PASS: ${{ secrets.FTP_PASS }}
         run: |
-          lftp -c "
-            set ssl:verify-certificate false;
-            set ftp:ssl-allow true;
-            open -u $FTP_USER,$FTP_PASS ftp://$FTP_HOST;
-            mirror -R --verbose --delete \
-              --exclude-glob .git \
-              --exclude-glob .github \
-              --exclude-glob node_modules \
-              --exclude-glob .env \
-              --exclude-glob vendor \
-              --exclude-glob storage/logs \
-              --exclude-glob storage/framework/cache \
-              --exclude-glob storage/framework/sessions \
-              --exclude-glob storage/framework/views \
-              --exclude-glob public/js/filament \
-              --exclude-glob public/css/filament \
-              --exclude-glob public/fonts/filament \
-              . /;
-            bye;
-          "
+          while IFS= read -r file; do
+            # Skip excluded paths
+            if echo "$file" | grep -qE "^(\.git|node_modules|\.env|vendor/|storage/logs|storage/framework/cache|storage/framework/sessions|storage/framework/views|public/js/filament|public/css/filament|public/fonts/filament)"; then
+              continue
+            fi
+            # Skip if file doesn't exist locally
+            if [ ! -f "$file" ]; then
+              continue
+            fi
+            DIR=$(dirname "$file")
+            lftp -c "
+              set ssl:verify-certificate false;
+              open -u $FTP_USER,$FTP_PASS ftp://$FTP_HOST;
+              mkdir -p $DIR;
+              put $file -o $file;
+              bye;
+            "
+            echo "✅ Uploaded: $file"
+          done < /tmp/files_to_upload.txt
