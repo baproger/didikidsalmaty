@@ -58,9 +58,9 @@ jobs:
             lftp -c "
               set ssl:verify-certificate false;
               open -u $FTP_USER,$FTP_PASS ftp://$FTP_HOST;
-              mkdir -p $DIR;
-              put $file -o $file;
+              mkdir -p httpdocs/$DIR;
+              put $file -o httpdocs/$file;
               bye;
             "
-            echo "✅ Uploaded: $file"
+            echo "✅ Uploaded: httpdocs/$file"
           done < /tmp/files_to_upload.txt
