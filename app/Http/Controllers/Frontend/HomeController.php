@@ -56,6 +56,7 @@ class HomeController extends Controller
             ['name' => 'Болашақ',  'age' => '6+', 'emoji' => '⭐', 'bg' => '#FFF8E1'],
         ]);
 
+        $defaultIcons = ['🎓', '💚', '🏠', '🛡️', '🍎', '❤️'];
         $priorities = Setting::get('priorities', [
             ['icon' => '🎓', 'title_ru' => 'Образование', 'title_kk' => 'Білім',        'desc_ru' => 'Индивидуальный подход и развивающие программы.'],
             ['icon' => '💚', 'title_ru' => 'Здоровье',    'title_kk' => 'Денсаулық',    'desc_ru' => 'Гимнастика, свежий воздух, медицинское наблюдение.'],
@@ -64,6 +65,12 @@ class HomeController extends Controller
             ['icon' => '🍎', 'title_ru' => 'Питание',     'title_kk' => 'Тамақтану',    'desc_ru' => 'Сбалансированное меню из свежих продуктов.'],
             ['icon' => '❤️', 'title_ru' => 'Воспитание',  'title_kk' => 'Тәрбие',       'desc_ru' => 'Нравственное воспитание, доброта и уважение.'],
         ]);
+        foreach ($priorities as $i => $p) {
+            $icon = $p['icon'] ?? '';
+            if (empty(trim($icon)) || mb_strlen($icon) === mb_strlen(preg_replace('/[^\x00-\x7F]/u', '', $icon))) {
+                $priorities[$i]['icon'] = $defaultIcons[$i] ?? '⭐';
+            }
+        }
 
         return view('home.index', compact(
             'latestPosts', 'teachers', 'faqs',
