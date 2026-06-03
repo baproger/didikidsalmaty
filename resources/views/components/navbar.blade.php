@@ -146,7 +146,6 @@
                                   {{ app()->getLocale() === $loc
                                       ? 'bg-white text-[#7EC8A4] shadow-sm'
                                       : 'text-gray-400 hover:text-gray-600' }}">
-                            <span>{{ $langFlags[$loc] ?? '' }}</span>
                             <span>{{ $langLabels[$loc] ?? strtoupper($loc) }}</span>
                         </a>
                     @endforeach
@@ -240,7 +239,6 @@
                         <a href="{{ LaravelLocalization::getLocalizedURL($loc, null, [], true) }}"
                            class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all
                                   {{ app()->getLocale() === $loc ? 'bg-white text-[#7EC8A4] shadow-sm' : 'text-gray-400' }}">
-                            <span>{{ $langFlags[$loc] ?? '' }}</span>
                             <span>{{ $langLabels[$loc] ?? strtoupper($loc) }}</span>
                         </a>
                     @endforeach
