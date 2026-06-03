@@ -12,7 +12,6 @@ $langLabels = ['ru' => 'RU',   'kk' => 'KZ',   'en' => 'EN'];
                         ? 'bg-white text-[#7EC8A4] shadow-sm'
                         : 'text-gray-500 hover:text-gray-800' }}"
         >
-            <span>{{ $langFlags[$locale] ?? '' }}</span>
             <span>{{ $langLabels[$locale] ?? strtoupper($locale) }}</span>
         </a>
     @endforeach
