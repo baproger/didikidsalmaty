@@ -3,7 +3,7 @@
     $title    = $data['title_'.$l]    ?? $data['title_ru']    ?? '';
     $subtitle = $data['subtitle_'.$l] ?? $data['subtitle_ru'] ?? '';
     $btnText  = $data['btn_text_'.$l] ?? $data['btn_text_ru'] ?? '';
-    $btnUrl   = $data['btn_url']      ?? '';
+    $btnUrl   = $data['btn_url_'.$l] ?? $data['btn_url_ru'] ?? $data['btn_url'] ?? '';
     $image    = $data['image']        ?? '';
     $style    = $data['style']        ?? 'green';
 

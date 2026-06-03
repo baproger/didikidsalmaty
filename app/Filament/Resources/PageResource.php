@@ -127,21 +127,21 @@ class PageResource extends Resource
                                     ->label('Стиль фона')
                                     ->options(['green' => 'Зелёный градиент', 'dark' => 'Тёмный', 'light' => 'Светлый'])
                                     ->default('green'),
-                                Forms\Components\TextInput::make('btn_url')
-                                    ->label('Ссылка кнопки')
-                                    ->placeholder('/contact'),
                                 // ── RU ──
                                 Forms\Components\TextInput::make('title_ru')->label('🇷🇺 Заголовок (RU)'),
                                 Forms\Components\Textarea::make('subtitle_ru')->label('🇷🇺 Подзаголовок (RU)')->rows(2),
                                 Forms\Components\TextInput::make('btn_text_ru')->label('🇷🇺 Текст кнопки (RU)'),
+                                Forms\Components\TextInput::make('btn_url_ru')->label('🇷🇺 Ссылка кнопки (RU)')->placeholder('/ru/blog/...'),
                                 // ── KK ──
                                 Forms\Components\TextInput::make('title_kk')->label('🇰🇿 Тақырып (KK)'),
                                 Forms\Components\Textarea::make('subtitle_kk')->label('🇰🇿 Астарлы жазу (KK)')->rows(2),
                                 Forms\Components\TextInput::make('btn_text_kk')->label('🇰🇿 Батырма мәтіні (KK)'),
+                                Forms\Components\TextInput::make('btn_url_kk')->label('🇰🇿 Батырма сілтемесі (KK)')->placeholder('/kk/blog/...'),
                                 // ── EN ──
                                 Forms\Components\TextInput::make('title_en')->label('🇬🇧 Title (EN)'),
                                 Forms\Components\Textarea::make('subtitle_en')->label('🇬🇧 Subtitle (EN)')->rows(2),
                                 Forms\Components\TextInput::make('btn_text_en')->label('🇬🇧 Button text (EN)'),
+                                Forms\Components\TextInput::make('btn_url_en')->label('🇬🇧 Button link (EN)')->placeholder('/en/blog/...'),
                             ])->columns(3),
 
                         // ── КОЛОНКИ ────────────────────────────────────────────
