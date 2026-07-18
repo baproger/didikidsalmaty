@@ -198,6 +198,47 @@ class PageResource extends Resource
                                     ->columnSpanFull(),
                             ])->columns(3),
 
+                        // ── МИНИ-НОВОСТИ ──────────────────────────────────────
+                        Block::make('mini_news')
+                            ->label('📰 Мини-новости')
+                            ->schema([
+                                Forms\Components\TextInput::make('title_ru')->label('🇷🇺 Заголовок секции (RU)'),
+                                Forms\Components\TextInput::make('title_kk')->label('🇰🇿 Секция тақырыбы (KK)'),
+                                Forms\Components\TextInput::make('title_en')->label('🇬🇧 Section title (EN)'),
+                                Forms\Components\Repeater::make('items')
+                                    ->label('Новости')
+                                    ->addActionLabel('+ Добавить новость')
+                                    ->schema([
+                                        Forms\Components\FileUpload::make('image')
+                                            ->label('Фото')
+                                            ->disk('public')->directory('blocks/mini-news')
+                                            ->image()->imagePreviewHeight('120')
+                                            ->columnSpanFull(),
+                                        Forms\Components\DatePicker::make('date')
+                                            ->label('Дата')
+                                            ->native(false)
+                                            ->displayFormat('d.m.Y'),
+                                        Forms\Components\TextInput::make('link')
+                                            ->label('Ссылка (необязательно)')
+                                            ->placeholder('/ru/blog/...')
+                                            ->columnSpan(2),
+                                        // ── RU ──
+                                        Forms\Components\TextInput::make('title_ru')->label('🇷🇺 Заголовок'),
+                                        Forms\Components\Textarea::make('text_ru')->label('🇷🇺 Текст')->rows(4),
+                                        // ── KK ──
+                                        Forms\Components\TextInput::make('title_kk')->label('🇰🇿 Тақырып'),
+                                        Forms\Components\Textarea::make('text_kk')->label('🇰🇿 Мәтін')->rows(4),
+                                        // ── EN ──
+                                        Forms\Components\TextInput::make('title_en')->label('🇬🇧 Title'),
+                                        Forms\Components\Textarea::make('text_en')->label('🇬🇧 Text')->rows(4),
+                                    ])
+                                    ->columns(3)
+                                    ->reorderable()
+                                    ->collapsible()
+                                    ->itemLabel(fn (array $state): ?string => $state['title_ru'] ?? null)
+                                    ->columnSpanFull(),
+                            ])->columns(3),
+
                         // ── ДОКУМЕНТЫ ─────────────────────────────────────────
                         Block::make('documents')
                             ->label('📄 Документы / PDF')
